@@ -1,0 +1,47 @@
+<div>
+<p>Jouer contre IA?</p>
+<input type = "checkbox" [(ngModel)]="iaParam">
+@if(iaParam){
+<select>
+    <option>facile</option>
+    <option>difficile</option>
+</select>
+}
+</div>
+
+<div>
+<span>Taille de la Map :</span>
+<select [(ngModel)]="tailleMapParam" name="tailleMap">
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+</select>
+</div>
+
+<div>
+<span>Nombre de Bateaux :</span>
+<select (change) = "creationTableauTaille()" [(ngModel)]="bateauxParam"name="nbrBateaux">
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+</select>
+</div>
+
+
+
+@for(bateau of tableauBateauxParam;track bateau.id){
+    <div>
+<span>Taille du bateau {{bateau.id}} :</span>
+<select [(ngModel)]="tableauBateauxParam[$index]" name="tailleBateau">
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+</select>
+</div>
+}
+
+<input type="button" value ="Envoyer" >
