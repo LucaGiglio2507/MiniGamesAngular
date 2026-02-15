@@ -1,3 +1,5 @@
-<app-bataille-parametre/>
+<app-bataille-parametre (paramSaved)="onParamSaved($event)"/>
 
-
+@if (isReady) {
+  <p>Le jeu est prêt à démarrer !</p>
+}

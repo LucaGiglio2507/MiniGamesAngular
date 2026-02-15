@@ -9,8 +9,11 @@ import { BatailleParametre } from "./composant/bataille-parametre/bataille-param
 })
 
 export class BatailleNavale {
+  isReady: boolean = false;
 
-
-
+  onParamSaved(params: any) {
+    console.log('Paramètres sauvegardés :', params);
+    this.isReady = true;
+  }
 }
 

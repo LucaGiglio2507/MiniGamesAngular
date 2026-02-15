@@ -1,47 +1,36 @@
 <div>
-<p>Jouer contre IA?</p>
-<input type = "checkbox" [(ngModel)]="iaParam">
-@if(iaParam){
-<select>
-    <option>facile</option>
-    <option>difficile</option>
-</select>
-}
+	<form [formGroup]="battleParamForm">
+		<div>
+			<label for="iaParam">Jouer contre l'IA:</label>
+			<input id="iaParam" formControlName="iaParam" type="checkbox">
+		</div>
+		@if (battleParamForm.get('iaParam')?.value) {
+			<div>
+				<label for="iaDifficulty">Difficulté de l'IA:</label>
+				<select id="iaDifficulty" formControlName="iaDifficulty">
+					<option value="easy">Facile</option>
+					<option value="medium">Moyen</option>
+					<option value="hard">Difficile</option>
+				</select>
+			</div>
+		}
+		<div>
+			<label for="boardSize">Taille du plateau:</label>
+			<input id="boardSize" formControlName="boardSize" type="number" min="5" max="20">
+		</div>
+		<div>
+			<label for="boatCount">Nombre de bateaux:</label>
+			<input id="boatCount" formControlName="boatCount" type="number" min="4" max="8"
+				(change)="creationTableauTaille()">
+		</div>
+		<div formArrayName="boats">
+			@for (boat of boats.controls; track boat; let i = $index) {
+				<div [formGroupName]="i">
+					<label for="boat-{{i}}">Bateau {{i + 1}} - Vie:</label>
+					<input id="boat-{{i}}" formControlName="vie" type="number" min="1">
+				</div>
+			}
+		</div>
+	</form>
+	<button (click)="saveParameters()" [disabled]="battleParamForm.invalid">Enregistrer les paramètres</button>
 </div>
-
-<div>
-<span>Taille de la Map :</span>
-<select [(ngModel)]="tailleMapParam" name="tailleMap">
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-    <option value="10">10</option>
-</select>
-</div>
-
-<div>
-<span>Nombre de Bateaux :</span>
-<select (change) = "creationTableauTaille()" [(ngModel)]="bateauxParam"name="nbrBateaux">
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-</select>
-</div>
-
-
-
-@for(bateau of tableauBateauxParam;track bateau.id){
-    <div>
-<span>Taille du bateau {{bateau.id}} :</span>
-<select [(ngModel)]="tableauBateauxParam[$index]" name="tailleBateau">
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-</select>
-</div>
-}
-
-<input type="button" value ="Envoyer" >
