@@ -1,36 +1,34 @@
 <div>
-	<form [formGroup]="battleParamForm">
+	<form [formGroup]="battleParamForm">                                     <!--formulaire, de type formGroup relié a battleParamForm-->
 		<div>
-			<label for="iaParam">Jouer contre l'IA:</label>
-			<input id="iaParam" formControlName="iaParam" type="checkbox">
+			<label for="iaParam">Jouer contre l'IA:</label>                  <!--le label iaParam est lié a l input portant l id iaParam (ligne du dessous)-->                             
+			<input id="iaParam" formControlName="iaParam" type="checkbox">  <!--input iaParam reliée au formControl iaParam-->
 		</div>
-		@if (battleParamForm.get('iaParam')?.value) {
+		@if (battleParamForm.get('iaParam')?.value) {                       <!--si iaParam est checked alors affiche le menu a l'intérieur du if-->                        
 			<div>
 				<label for="iaDifficulty">Difficulté de l'IA:</label>
-				<select id="iaDifficulty" formControlName="iaDifficulty">
+				<select id="iaDifficulty" formControlName="iaDifficulty">   <!-- select lié au formControl iaDifficulty-->
 					<option value="easy">Facile</option>
-					<option value="medium">Moyen</option>
 					<option value="hard">Difficile</option>
 				</select>
 			</div>
 		}
 		<div>
 			<label for="boardSize">Taille du plateau:</label>
-			<input id="boardSize" formControlName="boardSize" type="number" min="5" max="20">
+			<input id="boardSize" formControlName="boardSize" type="number" min="6" max="10"> <!--choix de la taille de la map avec valeur min et max (!ces valeurs ne sont limitées que si rentrée par les input prévu a cet effet si écris manuellement les valeurs peuvent être dépacée)-->
 		</div>
 		<div>
 			<label for="boatCount">Nombre de bateaux:</label>
-			<input id="boatCount" formControlName="boatCount" type="number" min="4" max="8"
-				(change)="creationTableauTaille()">
+			<input id="boatCount" formControlName="boatCount" type="number" min="4" max="8" (change)="creationTableauTaille()"> <!--choix du nombre de bateau avec max et min + création du tableau de choix de la vie de chaque bateau en fonction du nombre de bateau-->
 		</div>
-		<div formArrayName="boats">
-			@for (boat of boats.controls; track boat; let i = $index) {
-				<div [formGroupName]="i">
-					<label for="boat-{{i}}">Bateau {{i + 1}} - Vie:</label>
-					<input id="boat-{{i}}" formControlName="vie" type="number" min="1">
+		<div formArrayName="boats">                                         <!--liaison de cette div au formArray boats-->
+			@for (boat of boats.controls; track boat; let i = $index) {   <!-- boats.controls permet d'aller chercher les différents control dans le formArray, track boat permet de choisir la donnée a suivre, itérateur générer en direct-->
+				<div [formGroupName]="i">                                   <!-- i étant l itérateur il permet d'identifier sur quel control on travaille-->
+					<label for="boat-{{i}}">Bateau {{i + 1}} - Vie:</label> 
+					<input id="boat-{{i}}" formControlName="vie" type="number" min="2" max="4"> <!--choix de la vie lliée au formControl vie faisant partie de mon formArray-->
 				</div>
 			}
 		</div>
 	</form>
-	<button (click)="saveParameters()" [disabled]="battleParamForm.invalid">Enregistrer les paramètres</button>
+	<button (click)="saveParameters()" [disabled]="battleParamForm.invalid">Enregistrer les paramètres</button>     <!--bouton permettant d'enregistrer les paramètres et de les envoyer au parent, n'est pas cliquable tant que les validateurs de battleParamForm ne sont pas validés-->
 </div>
